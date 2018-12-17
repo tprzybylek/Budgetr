@@ -1,0 +1,18 @@
+<div class="modal-content">
+    <form method="post" action="{% url 'budget_category_delete' category.id %}" class="js-category-delete-form">
+        {% csrf_token %}
+
+        <div class="modal-header">
+            <h4 class="modal-title">Delete a category</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <p class="lead">Are you sure you want to delete the category <strong>{{ category.name }}</strong>?</p>
+        </div>
+
+        <div class="modal-footer">
+            <button class="modal-close waves-effect btn-flat red" type="submit">Delete</button>
+        </div>
+    </form>
+</div>

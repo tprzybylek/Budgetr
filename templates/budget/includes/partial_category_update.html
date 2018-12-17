@@ -1,0 +1,14 @@
+<div class="modal-content">
+    <form method="post" action="{% url 'budget_category_update' form.instance.pk %}" class="js-category-update-form">
+        {% csrf_token %}
+        <div class="modal-header">
+            <h4 class="modal-title">Update a category</h4>
+        </div>
+        <div class="modal-body">
+            {% include 'budget/includes/partial_category_form.html' %}
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close waves-effect waves-green btn-flat light-blue" type="submit">Update</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+{% load mptt_tags %}
+{% for category,structure in categories|tree_info %}
+    {% if structure.new_level %}
+        <ul><li>
+    {% else %}
+        </li><li>
+    {% endif %}
+        {{ category.id }}
+        {{ category.name }}
+
+        <button class="waves-effect btn-flat js-category-update" type="button" data-url="{% url 'budget_category_update' category.id %}">
+            <i class="material-icons center">edit</i>
+        </button>
+        <button class="waves-effect btn-flat js-category-delete" type="button" data-url="{% url 'budget_category_delete' category.id %}">
+            <i class="material-icons center">delete</i>
+        </button>
+
+    {% for level in structure.closed_levels %}
+        </li></ul>
+    {% endfor %}
+{% endfor %}

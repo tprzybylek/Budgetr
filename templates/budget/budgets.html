@@ -1,0 +1,39 @@
+{% extends 'budget/budget_layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+    <h4>Budgets</h4>
+        {% if budgets != None %}
+        <table id="budgets-table" class="highlight">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% include 'budget/includes/partial_budget_list.html' %}
+            </tbody>
+        </table>
+        {% else %}
+        There are no budgets to show.
+        {% endif %}
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light light-blue js-add-budget" data-url="{% url 'budget_add_budget' %}"><i class="material-icons">add</i></a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal_add_budget" class="modal">
+
+    </div>
+
+    {% block javascript %}
+        <script src="{% static 'js/budget.js' %}"></script>
+    {% endblock %}
+{% endblock %}

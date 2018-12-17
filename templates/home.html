@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block menubar %}
+    {% if user.is_authenticated %}
+    <nav class="grey lighten-5">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo black-text">Budgetr</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{% url 'budget_dashboard' %}" class="black-text">Dashboard</a></li>
+            <li><a href="{% url 'budget_archive' %}" class="black-text">Archive</a></li>
+            <li><a href="{% url 'budget_budgets' %}" class="black-text">Budgets</a></li>
+            <li><a href="{% url 'budget_categories' %}" class="black-text">Categories</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% if user.is_authenticated %}
+        <h2>Hi {{ user.username }}!</h2>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+
+    {% else %}
+
+        <h1>Budgetr</h1>
+        <p>You are not logged in</p>
+        <p>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        </p>
+        <p>
+            <a href="{% url 'password_reset' %}">Forgot your password?</a>
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

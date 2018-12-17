@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block menubar %}
+    {% if user.is_authenticated %}
+    <nav class="grey lighten-5">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo black-text">Budgetr</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{% url 'budget_dashboard' %}" class="black-text">Dashboard</a></li>
+            <li><a href="{% url 'budget_archive' %}" class="black-text">Archive</a></li>
+            <li><a href="{% url 'budget_budgets' %}" class="black-text">Budgets</a></li>
+            <li><a href="{% url 'budget_categories' %}" class="black-text">Categories</a></li>
+            </ul>
+        </div>
+    </nav>
+    {% endif %}
+{% endblock %}

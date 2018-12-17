@@ -1,0 +1,137 @@
+{% extends 'budget/budget_layout.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+    <div class="content">
+        <h4>Archive</h4>
+        <div class="row">
+            {% for year in years %}
+                {% if year == active_year %}
+                    <div class="col s1 center light-blue lighten-3">
+                        <a href="{% url 'budget_archive' %}?active_year={{ year }}&active_month={{ active_month }}">{{ year }}</a>
+                    </div>
+                {% else %}
+                    <div class="col s1 center">
+                        <a href="{% url 'budget_archive' %}?active_year={{ year }}&active_month={{ active_month }}">{{ year }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for month in months %}
+                {% if month == active_month %}
+                    <div class="col s1 center light-blue lighten-3">
+                        <a href="{% url 'budget_archive' %}?active_year={{ active_year }}&active_month={{ month }}">{{ month }}</a>
+                    </div>
+                {% else %}
+                    <div class="col s1 center">
+                        <a href="{% url 'budget_archive' %}?active_year={{ active_year }}&active_month={{ month }}">{{ month }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if operations.all %}
+    <div class="content">
+        <svg id="chart"></svg>
+    </div>
+    {% endif %}
+
+    <div class="content">
+    <h4>Operations</h4>
+        {% if operations.all %}
+        <table id="operations-table" class="highlight">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% include 'budget/includes/partial_operation_list.html' %}
+            </tbody>
+        </table>
+        {% else %}
+            There are no operations to show.
+        {% endif %}
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light light-blue"><i class="material-icons">add</i></a>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/operation.js' %}"></script>
+    <script src="{% static 'js/d3.min.js' %}"></script>
+    <script>
+        var DE = d3.formatLocale(
+          {
+          "decimal": ",",
+          "thousands": ".",
+          "grouping": [3],
+          "currency": ["", "€"]
+          });
+
+
+
+        var width = d3.select("svg#chart").node().getBoundingClientRect().width;
+        var height = d3.select("svg#chart").node().getBoundingClientRect().height;
+        var svg = d3.select("svg#chart"),
+            margin = {top: 20, right: 20, bottom: 100, left: 75};
+            width = width - margin.left - margin.right;
+            height = height - margin.top - margin.bottom;
+
+        var g = svg.append("g");
+        g.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+        var data = {{ categories|safe }};
+
+        var x = d3.scaleBand()
+            .rangeRound([0, width])
+            .padding(0.1)
+            .domain(data.map(function(d) {
+                return d.category__name; }));
+
+        var y = d3.scaleLinear()
+            .rangeRound([height, 0])
+            .domain([0, d3.max(data, function(d) {
+                return d.value_sum})]);
+
+        g.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("class", function(d) {
+                    if (d.value_sum < 0){
+                        return "bar negative";
+                    } else {
+                        return "bar positive";
+                    }
+                })
+                .attr("x", function(d) { return x(d.category__name); })
+                .attr("y", function(d) { return y(Math.abs(d.value_sum)); })
+                .attr("width", x.bandwidth())
+                .attr("height", function(d) { return height - y(Math.abs(d.value_sum)); });
+
+        g.append("g")
+            .attr("class", "axis axis-x")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+                .style("text-anchor", "start")
+                .attr("transform", "rotate(45)");
+
+        g.append("g")
+            .attr("class", "axis axis-y")
+            .call(d3.axisLeft(y).ticks(10).tickFormat(DE.format("-$.2f")));
+    </script>
+{% endblock %}

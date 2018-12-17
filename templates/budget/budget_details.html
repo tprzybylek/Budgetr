@@ -1,0 +1,34 @@
+{% extends 'budget/budget_layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content" id="chart">
+
+    </div>
+    <div class="content">
+    <h4>Budget {{ budget }}</h4>
+        {% if operations != None %}
+        <table id="operations-table" class="highlight">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% include 'budget/includes/partial_operation_list.html' %}
+            </tbody>
+        </table>
+        {% else %}
+            There are no operations to show.
+        {% endif %}
+    </div>
+
+    {% block javascript %}
+        <script src="{% static 'js/operation.js' %}"></script>
+    {% endblock %}
+{% endblock %}

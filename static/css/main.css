@@ -1,0 +1,76 @@
+body {
+    background-image: url(trianglify.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 16px;
+    margin: 0;
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0px auto;
+}
+
+.login-splash {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 50px;
+    width: 600px;
+    max-height: 360px;
+    background-color: #fafafa;
+}
+
+.menubar{
+    background-color: #fafafa;
+    margin: 0 0 2em 0;
+    padding: 0.5em 1em 0.5em 1em;
+    overflow: hidden;
+}
+
+.menubar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menubar li {
+    float: left;
+    display: block;
+    padding: 0 0.5em 0 0em;
+}
+
+.content {
+    background-color: #fafafa;
+    margin: 0 0 2em 0;
+    padding: 2em 1em 2em 1em;
+}
+
+#categories-list ul {
+    margin-left: 1em;
+    padding: 0;
+}
+
+#chart  {
+    width: 100%;
+    height: 480px;
+  }
+
+  .bar {
+    fill: grey;
+  }
+  .bar.positive{
+    fill: #0277bd;
+  }
+  .bar.negative{
+    fill: #4a148c;
+  }
+
+nav {
+    padding-left: 16px;
+    margin-bottom: 32px;
+    box-shadow: none !important;
+}

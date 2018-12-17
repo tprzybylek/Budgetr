@@ -1,0 +1,40 @@
+{% extends 'budget/budget_layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="content">
+    <h4>Dashboard</h4>
+        {% if operations != None %}
+        <table id="operations-table" class="highlight">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% include 'budget/includes/partial_operation_list.html' %}
+            </tbody>
+        </table>
+        {% else %}
+            There are no operations to show.
+        {% endif %}
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light light-blue js-operation-create" data-url="{% url 'budget_operation_create' %}"><i class="material-icons">add</i></a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal-operation" class="modal">
+
+    </div>
+
+    {% block javascript %}
+        <script src="{% static 'js/operation.js' %}"></script>
+    {% endblock %}
+{% endblock %}

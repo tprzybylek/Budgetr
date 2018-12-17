@@ -1,0 +1,17 @@
+{% for operation in operations %}
+    <tr>
+        <td>{{ operation.pk }}</td>
+        <td>{{ operation.datetime }}</td>
+        <td><a href="{% url 'budget_category_details' operation.category.id %}">{{ operation.category }}</a></td>
+        <td>{{ operation.value }}</td>
+        <td>
+            <button class="waves-effect btn-flat right js-operation-delete" type="button" data-url="{% url 'budget_operation_delete' operation.id %}">
+                <i class="material-icons center">delete</i>
+            </button>
+            <button class="waves-effect btn-flat right js-operation-update" type="button" data-url="{% url 'budget_operation_update' operation.id %}">
+                <i class="material-icons center">edit</i>
+            </button>
+        </td>
+    </tr>
+{% endfor %}
+

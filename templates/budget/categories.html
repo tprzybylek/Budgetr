@@ -1,0 +1,30 @@
+{% extends 'budget/budget_layout.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+    <div class="content">
+        <h4>Categories</h4>
+        {% if categories != None %}
+
+            <ul id="categories-list">
+                {% include 'budget/includes/partial_category_list.html' %}
+            </ul>
+        {% else %}
+        There are no categories to show.
+        {% endif %}
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large waves-effect waves-light light-blue js-category-create" data-url="{% url 'budget_category_create' %}"><i class="material-icons">add</i></a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal-category" class="modal">
+
+    </div>
+
+    {% block javascript %}
+        <script src="{% static 'js/category.js' %}"></script>
+    {% endblock %}
+{% endblock %}
