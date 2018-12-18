@@ -25,7 +25,7 @@ SECRET_KEY = '3wja+gkjz%@3h&l%aioval*zrk(0!*di3*94q+r)k-#)j3ao%b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['budgetr.tprzybylek.me', '127.0.0.1']
 
 
 # Application definition
